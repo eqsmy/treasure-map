@@ -12,47 +12,114 @@ body {
 input[type=text] {
     background-color: black;
     color: greenyellow;
-    border-width: thick;
-    border-left: 0;
-    border-top: 0;
-    border-right: 0;
-    height: 30px;
+    border-width: 2;
+    height: 25px;
+    width: 40px;
     font-family: 'Courier New';
     margin-left: 20px;
+    border-style: solid;
 }
 
 input[type=submit] {
-    background-color: grey;
+    background-color: grey ;
     color: white;
     border: 2px solid white;
     padding: 10px;
+    cursor: pointer;
+}
+dot {
+    height: 400px;
+  width: 400px;
+  background-color: black;
+  border-color: greenyellow;
+  border: 2px solid;
+  border-radius: 50%;
+  display: inline-block;
 }
  
 </style>
 </head>
 <body>
 <script>
+    var width = 500
+    var height = 400
+
+    function setTracker(lat, long, correct) {
+        var canvas = document.getElementById('radar');
+        lat = (lat / 90) * (height/2)
+        long = (long / 90) * (width/2)
+        if (!lat) lat = 0
+        if (!long) long = 0
+        console.log(lat, long)
+        if (canvas) {
+            let context = canvas.getContext('2d');
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.strokeStyle='greenyellow';
+            context.beginPath();
+            context.rect(20,20,width,height)
+            context.lineWidth = 9;
+            context.stroke();
+            context.moveTo(20,(height/2) + 20 - lat);
+            context.lineTo(width + 20,(height/2) + 20 - lat);
+            context.moveTo((width/2) + 20 + long,20);
+            context.lineTo((width/2) + 20 + long,height + 20);
+            if (correct) {
+                context.fillStyle = "greenyellow"
+                context.fillRect((width/2) + 10 + long,(height/2) + 10 - lat,20,20)
+            }
+            else context.rect((width/2) + 10 + long,(height/2) + 10 - lat,20,20)
+            context.lineWidth = 2;
+            context.stroke();
+        }
+    }
+
     function validateCoords(e) {
         let lat_box = document.getElementById("lat")
         let long_box = document.getElementById("long")
-        if (lat_box.value) {
+        let lat_correct = false
+        let long_correct = false
+        let correct = false
+        if (parseFloat(lat_box.value) >= -47.4 && parseFloat(lat_box.value) <= -45.4) {
             document.getElementById("lat").style.borderColor = "greenyellow"
-        } else {
-            document.getElementById("lat").style.borderColor = "red"
-        }
-        if (long_box.value) {
+            lat_correct = true
+        } 
+        if (parseFloat(long_box.value) <= 52.7 && parseFloat(long_box.value) >= 50.7) {
             document.getElementById("long").style.borderColor = "greenyellow"
-        } else {
-            document.getElementById("long").style.borderColor = "red"
-        }
+            long_correct = true
+        } 
+        if (lat_correct && long_correct) correct = true
+        setTracker(parseFloat(lat_box.value), parseFloat(long_box.value), correct)
     }
+
 </script>
-<h1>Vessel Navigator</h1>
+<h1>VESSEL NAVIGATOR</h1>
+<h2>Set Target</h2>
   <label for="lat">Latitude: </label>
   <input type="text" id="lat"><br><br>
   <label for="long">Longitude: </label>
   <input type="text" id="long"><br><br>
-  <input onclick="validateCoords()" type="submit" value="Set Destination">
+  <input onclick="validateCoords()" type="submit" value="Set Target">
+
+<h2 style="margin-top: 40px">Target Tracker</h2>
+<canvas style="width: 100%" id="radar" width="540" height="440"></canvas>  
+<script>
+var canvas = document.getElementById('radar');
+    if (canvas) {
+        let context = canvas.getContext('2d');
+        context.strokeStyle='greenyellow';
+        context.beginPath();
+        context.rect(20,20,width,height)
+        context.lineWidth = 9;
+        context.stroke();
+        context.moveTo(20,(height/2) + 20);
+        context.lineTo(width + 20,(height/2) + 20);
+        context.moveTo((width/2) + 20,20);
+        context.lineTo((width/2) + 20,height + 20);
+        context.rect((width/2) + 10,(height/2) + 10,20,20)
+        context.lineWidth = 2;
+        context.stroke();
+    }
+</script>
 
 </body>
 </html>
