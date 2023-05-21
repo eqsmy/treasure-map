@@ -9,15 +9,20 @@ body {
   color: greenyellow;
 }
 
+label {
+    font-size: 4vw;
+}
+
 input[type=text] {
     background-color: black;
     color: greenyellow;
     border-width: 2;
-    height: 25px;
-    width: 40px;
+    height: 30px;
+    width: 60px;
     font-family: 'Courier New';
     margin-left: 20px;
     border-style: solid;
+    font-size: 4vw;
 }
 
 input[type=submit] {
@@ -26,6 +31,7 @@ input[type=submit] {
     border: 2px solid white;
     padding: 10px;
     cursor: pointer;
+    font-size: 2vw;
 }
 dot {
     height: 400px;
@@ -36,7 +42,13 @@ dot {
   border-radius: 50%;
   display: inline-block;
 }
- 
+h1 {
+    font-size: 8vw;
+}
+
+h2 {
+    font-size: 6vw;
+}
 </style>
 </head>
 <body>
@@ -101,7 +113,7 @@ dot {
   <input onclick="validateCoords()" type="submit" value="Set Target">
 
 <h2 style="margin-top: 40px">Target Tracker</h2>
-<canvas id="radar" width="340" height="240"></canvas>  
+<canvas style="width: 100%" id="radar" width="340" height="240"></canvas>  
 <script>
 var canvas = document.getElementById('radar');
     if (canvas) {
