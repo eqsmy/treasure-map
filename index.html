@@ -10,7 +10,7 @@ body {
 }
 
 label {
-    font-size: 4vw;
+    font-size: 15pt;
 }
 
 input[type=text] {
@@ -22,7 +22,7 @@ input[type=text] {
     font-family: 'Courier New';
     margin-left: 20px;
     border-style: solid;
-    font-size: 4vw;
+    font-size: 15pt;
 }
 
 input[type=submit] {
@@ -43,11 +43,11 @@ dot {
   display: inline-block;
 }
 h1 {
-    font-size: 8vw;
+    font-size: 40px;
 }
 
 h2 {
-    font-size: 6vw;
+    font-size: 25pt;
 }
 </style>
 </head>
@@ -104,6 +104,7 @@ h2 {
     }
 
 </script>
+<div style="max-width: 600px">
 <h1>VESSEL NAVIGATOR</h1>
 <h2>Set Target</h2>
   <label for="lat">Latitude: </label>
@@ -114,6 +115,7 @@ h2 {
 
 <h2 style="margin-top: 40px">Target Tracker</h2>
 <canvas style="width: 100%" id="radar" width="340" height="240"></canvas>  
+</div>
 <script>
 var canvas = document.getElementById('radar');
     if (canvas) {
