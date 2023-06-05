@@ -43,7 +43,7 @@ dot {
   display: inline-block;
 }
 h1 {
-    font-size: 60pt;
+    font-size: 40pt;
 }
 
 h2 {
@@ -99,8 +99,11 @@ h2 {
             document.getElementById("long").style.borderColor = "greenyellow"
             long_correct = true
         } 
-        if (lat_correct && long_correct) correct = true
-        setTracker(parseFloat(lat_box.value), parseFloat(long_box.value), correct)
+        if (lat_correct && long_correct) {
+            correct = true
+            setTracker(parseFloat(lat_box.value), parseFloat(long_box.value), correct)
+            window.location.href = "./success.html";
+        }
     }
 
 </script>
