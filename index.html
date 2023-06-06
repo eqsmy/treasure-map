@@ -88,22 +88,32 @@ h2 {
     function validateCoords(e) {
         let lat_box = document.getElementById("lat")
         let long_box = document.getElementById("long")
+
+        let url = new URL('https://us-central1-cs247g-p2.cloudfunctions.net/validateCoords')
+        let params = {lat: lat_box.value, long: long_box.value}
+        url.search = new URLSearchParams(params).toString()
+        let correct = false
         let lat_correct = false
         let long_correct = false
-        let correct = false
-        if (parseFloat(lat_box.value) >= -47.4 && parseFloat(lat_box.value) <= -45.4) {
-            document.getElementById("lat").style.borderColor = "greenyellow"
-            lat_correct = true
-        } 
-        if (parseFloat(long_box.value) <= 52.7 && parseFloat(long_box.value) >= 50.7) {
-            document.getElementById("long").style.borderColor = "greenyellow"
-            long_correct = true
-        } 
-        if (lat_correct && long_correct) {
-            correct = true
-            setTracker(parseFloat(lat_box.value), parseFloat(long_box.value), correct)
-            window.location.href = "./success.html";
-        }
+
+        fetch(url, {mode: 'cors'}).then(
+            function(response) {
+                response.json().then(function(data) {
+                    if (data.lat && data.long) {
+                        correct = true
+                        setTracker(parseFloat(lat_box.value), parseFloat(long_box.value), correct)
+                        window.location.href = "./success.html";
+                    } else if (data.lat) {
+                        document.getElementById("lat").style.borderColor = "greenyellow"
+                        lat_correct = true
+                    } else if (data.long) {
+                        document.getElementById("long").style.borderColor = "greenyellow"
+                        long_correct = true
+                    }
+                });
+            }
+        )
+        setTracker(parseFloat(lat_box.value), parseFloat(long_box.value), correct)
     }
 
 </script>
@@ -117,6 +127,7 @@ h2 {
   <input onclick="validateCoords()" type="submit" value="Set Target">
 
 <h2 style="margin-top: 40px">Target Tracker</h2>
+<p style="visibility: hidden">Hint:</p>
 <canvas style="width: 100%" id="radar" width="340" height="240"></canvas>  
 </div>
 <script>
